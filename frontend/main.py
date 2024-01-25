@@ -18,9 +18,13 @@ def check_session():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if not request.method == 'POST': return render_template('base.html', nfts=web.func("contract", "GetAllSellNft"))
-    # result = web.buy(request.form.get('amount', type=int))
-    # check_result(result)
+    if request.method == 'POST': 
+        id = request.form.get("id", type=int)
+        res = web.func("contract", "BuyNft", args=[id])
+        check_result(res)
+    return render_template('base.html', nfts=web.func("contract", "GetAllSellNft"))
+    
+    
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -50,3 +54,7 @@ def lk():
     check_result(result)
 
 
+
+
+if __name__ == "__main__":
+    app.run(port=5020)

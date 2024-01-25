@@ -1,8 +1,8 @@
 from web3 import Web3
 import json
 
-configContract = json.load(open("./backend/artifacts/contract.sol/Contract.json"))
-configUsers = json.load(open("./backend/artifacts/contract.sol/Contract.json"))
+configContract = json.load(open("./artifacts/contracts/contract.sol/Contract.json"))
+configUsers = json.load(open("./artifacts/contracts/user.sol/Users.json"))
 
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 
@@ -17,10 +17,10 @@ else:
     print("Disconnected")
 
 
-def func(contract: str, name: str, args=None, operation=None):
+def func(var: str, name: str, args=None, operation=None):
     try:
         if operation != "transact":
-            if contract == "contract":
+            if var == "contract":
                 if args:
                     res = contract.functions[name](*args).call()
                 else:
@@ -31,7 +31,7 @@ def func(contract: str, name: str, args=None, operation=None):
                 else:
                     res = users.functions[name]().call()
         else:
-            if contract == "contract":
+            if var == "contract":
                 if args:
                     res = contract.functions[name](*args).transact()
                 else:

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--  -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--  -->
+
+    <title>Profi</title>
+</head>
+<body>
+    <header>
+        <menu id="menu">
+            <div>
+                <a href="/">Nft</a>
+                <a href="/actions">Аукционы</a>
+                <a href="/buy_profi">Купить Profi</a>
+                {% if session.get('user') != None %}
+                    <a href="/lk">Мои данные</a>
+                    <a href="/logout">Выйти</a>
+                {% else %}
+                    <a href="/login">Войти</a>
+                {% endif %}
+            </div>
+        </menu>
+    </header>
+
+    <main class="main">
+        {% block main %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div>
+            <p>&copy;Понакшина И.А. "Самарский Государственный Колледж" для "Профессионалы" 2024</p>
+        </div>
+    </footer>
+
+    <!--  -->
+    <script>
+        setInterval(function()
+        {
+            $('#menu').load(document.URL + ' #menu');
+            $('#main').load(document.URL + ' #main');
+        }, 2000)
+    </script>
+    <!--  -->
+</body>
+</html>

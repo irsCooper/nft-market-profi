@@ -22,7 +22,7 @@ contract Contract is ERC20, ERC1155 {
         string Name;
         string Desimals;
         string ImageName; //path to photo
-        // uint   TotalReliased;
+        uint   TotalReliased;
         uint   DataSet;
     }
 
@@ -52,7 +52,6 @@ contract Contract is ERC20, ERC1155 {
 
     // ставка к аукциону
     struct Bet {
-        uint Id;
         address Owner;
         uint Price;
     }
@@ -60,12 +59,12 @@ contract Contract is ERC20, ERC1155 {
     struct Action {
         uint Id;
         Collection Collection;
-        address Owner;
+        // address Owner;
         uint Time_Start;
         uint Time_End;
         uint Min_Price;
         uint Max_Price;
-        uint Id_Max_Bet;
+        // uint Id_Max_Bet;
     }
 
 
@@ -85,18 +84,6 @@ contract Contract is ERC20, ERC1155 {
     mapping (uint => address) owner_collection;
     mapping (uint => bool) SellOrNotSell_Collection;
     mapping (address => uint) user_amount_unicue_collection; // это нужно для удобства вывода коллекций пользователя
-
-    // проверяем, продаётся nft/коллекция или не продаётся
-    // modifier CheckSell(uint id, uint _type) {
-    //     if(_type == 1) {
-    //         require(SellOrNotSell_NFT[id] == false, "this nft already sale");  
-    //     }
-    //     else{
-    //         require(SellOrNotSell_Collection[id] == false, "this collection already sale");
-    //     }
-    //     _;
-    // }
-
 
     // action
     mapping (uint => Bet[]) public bet_to_action;
@@ -120,10 +107,6 @@ contract Contract is ERC20, ERC1155 {
         _;
     }
 
-    // modifier ColExist(uint id) {
-    //     require(id <= unicue_collection, "collection does'n exist");
-    //     _;
-    // }
 
     function GetAllSellNft() public view returns(Sell_Nft[] memory) {
         return Sell_Only_Nft;
@@ -133,9 +116,9 @@ contract Contract is ERC20, ERC1155 {
         return action;
     }
 
-    // function GetBetToAction(uint id) public view returns(Bet[] memory) {
-    //     return bet_to_action[id];
-    // }
+    function GetBetToAction(uint id) public view returns(Bet[] memory) {
+        return bet_to_action[id];
+    }
 
 
 
@@ -169,7 +152,7 @@ contract Contract is ERC20, ERC1155 {
     struct NftForUserLk {
         NFT NFT;
         uint Amount;
-        uint Price;
+        // uint Price;
         NftData Data;
     }
 
@@ -184,7 +167,7 @@ contract Contract is ERC20, ERC1155 {
             if (ERC1155.balanceOf(msg.sender, i) > 0) {
                 _nft[push] = NftForUserLk(
                     nft[i], 
-                    ERC1155.balanceOf(msg.sender, i),
+                    // ERC1155.balanceOf(msg.sender, i),
                     nft_price[i],
                     NftData(0, "", "", false) //заглушка, на фронте при выводе nft надо добавить проверку пустое значениеили нет, если пустое - не показывать, если не пустое - показывать
                 );
@@ -233,7 +216,7 @@ contract Contract is ERC20, ERC1155 {
             name,
             description,
             pathToImage,
-            // amount,
+            amount,
             block.timestamp
         );    
         nft_price[unicue_nft] = price;  
@@ -275,7 +258,7 @@ contract Contract is ERC20, ERC1155 {
         ERC1155._safeTransferFrom(
             _owner, 
             msg.sender, 
-            id, 
+            Sell_Only_Nft[id].Nft.Id, 
             ERC1155.balanceOf(_owner, id), 
             ""
         );
@@ -286,6 +269,8 @@ contract Contract is ERC20, ERC1155 {
             Sell_Only_Nft[Sell_Only_Nft.length - 1].Id = id;
             Sell_Only_Nft[id] = Sell_Only_Nft[Sell_Only_Nft.length - 1];
         }
+
+        // TODO сделать так, чтобы инфа в nft_data обновилась на true
 
         Sell_Only_Nft.pop();
         SellOrNotSell_NFT[id] = false;
@@ -334,27 +319,6 @@ contract Contract is ERC20, ERC1155 {
         collection[idCollection].NftInCollection.push(unicue_nft);
         collection[idCollection].AmountForNft.push(amount);
 
-        // ERC1155._mint(
-        //     msg.sender, 
-        //     unicue_nft, 
-        //     amount, 
-        //     ""
-        // );
-
-        // nft[unicue_nft] = NFT(
-        //     unicue_nft,
-        //     name,
-        //     description,
-        //     pathToImage,
-        //     amount,
-        //     block.timestamp
-        // );    
-        // nft_price[unicue_nft] = price;  
-        // owner_nft[unicue_nft] = msg.sender;
-
-        // user_amount_unicue_nft[msg.sender] += 1;
-        // unicue_nft += 1;
-
         SetNft(name, description, pathToImage, price, amount);
     }
 
@@ -373,17 +337,17 @@ contract Contract is ERC20, ERC1155 {
 
         SellOrNotSell_Collection[idCollection] = true;
 
-        bet_to_action[action.length].push(Bet(0, address(0), 0));
+        bet_to_action[action.length].push(Bet(address(0), 0));
 
         action.push(Action(
             action.length,
             collection[idCollection],
-            msg.sender,
+            // msg.sender,
             start,
             end,
             min,
-            max,
-            0
+            max
+            // 0
         ));
     }
 
@@ -392,14 +356,13 @@ contract Contract is ERC20, ERC1155 {
         // require(action[id].Time_Start <= block.timestamp, "action is not started"); //разкоментить для итогового решения, для тестов эти параметры мешаются, но они работают
         // require(action[id].Time_End >= block.timestamp, "action the end");
         require(ERC20.balanceOf(msg.sender) >= bet, "invalid money");
-        require(bet > bet_to_action[id][action[id].Id_Max_Bet].Price, "bet is small");
+        require(bet > bet_to_action[id][bet_to_action[id].length - 1].Price, "bet is small");
         require(bet >= action[id].Min_Price, "bet is lasnet in minimal bet"); //мне лень пользоваться переводчиком
         require(bet <= action[id].Max_Price, "bet is bigger");
 
-        action[id].Id_Max_Bet = bet_to_action[id].length;
+        // action[id].Id_Max_Bet = bet_to_action[id].length;
 
         bet_to_action[id].push(Bet(
-            bet_to_action[id].length,
             msg.sender,
             bet
         ));
@@ -407,11 +370,11 @@ contract Contract is ERC20, ERC1155 {
 
 
     function EndAction(uint id) public OnlyOwner() {
-        address owner_bet = bet_to_action[id][action[id].Id_Max_Bet].Owner;
-        uint price = bet_to_action[id][action[id].Id_Max_Bet].Price;
+        address owner_bet = bet_to_action[id][bet_to_action[id].length - 1].Owner;
+        uint price = bet_to_action[id][bet_to_action[id].length - 1].Price;
 
         require(id <= action.length, "action does'n exist");
-        require(action[id].Id_Max_Bet != 0, "null bet, you're not end this action");
+        require(bet_to_action[id].length > 1, "null bet, you're not end this action");
 
         ERC20._transfer(owner_bet, Owner, price);
 

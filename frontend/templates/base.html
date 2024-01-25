@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block main %}
+
+    {% for nft in nfts %}
+        <div>
+            <p>{{nft}}</p>
+            <form method="post">
+                <button name="id" value="{{nft[0]}}">Купить</button>
+            </form>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
