@@ -12,7 +12,7 @@ def check_result(result):
         flash("Успешно")
 
 def check_session():
-    if session.get('user'): return redirect('/')
+    if session.get('user') == None: return redirect('/')
 
 
 
@@ -20,25 +20,29 @@ def check_session():
 def index():
     if request.method == 'POST': 
         id = request.form.get("id", type=int)
-        res = web.func("contract", "BuyNft", args=[id])
+        res = web.func("BuyNft", args=[id])
         check_result(res)
     return render_template('base.html', nfts=web.func("contract", "GetAllSellNft"))
     
     
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/auth', methods=['GET', 'POST'])
 def login():
-    check_session()
-    if not request.method == 'POST': return render_template('auth.html')
-    wallet_address = request.json['walletAddress']
-    res = web.key_check(wallet_address)
-    print(res)
-    if type(res) == str:
-        flash(res)
-    else:
-        session['user'] = res
-        print(session['user'])
-        return redirect('/')
+    if session.get('user') != None: return redirect('/')
+    if request.method == 'POST':
+        res = web.func("Auth")
+        check_result(res)
+        
+    # if not request.method == 'POST': return render_template('auth.html')
+    # wallet_address = request.json['walletAddress']
+    # res = web.key_check(wallet_address)
+    # print(res)
+    # if type(res) == str:
+        # flash(res)
+    # else:
+        # session['user'] = res
+        # print(session['user'])
+        # return redirect('/')
     
 
 @app.route('/lk', methods=['GET', 'POST'])
@@ -47,7 +51,7 @@ def lk():
     if not request.method == 'POST': return render_template('lk.html', 
                                                             nfts=web.func("contract", "GetAllUser_Nfts"),
                                                             collections=web.func("contract", "GetAllUser_Collection"))
-    result = web.func("contract", "SellNft", args=[
+    result = web.func("SellNft", args=[
         request.form.get("id", type=int),
         request.form.get("price", type=int)],
         operation="transact")

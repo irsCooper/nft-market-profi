@@ -7,7 +7,7 @@ configUsers = json.load(open("./artifacts/contracts/user.sol/Users.json"))
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 
 contract = w3.eth.contract(address=configContract["address"], abi=configContract["abi"])
-users = w3.eth.contract(address=configUsers["address"], abi=configUsers["abi"])
+# users = w3.eth.contract(address=configUsers["address"], abi=configUsers["abi"])
 
 if w3.is_connected:
     print("--------------")
@@ -17,30 +17,30 @@ else:
     print("Disconnected")
 
 
-def func(var: str, name: str, args=None, operation=None):
+def func(name: str, args=None, operation=None):
     try:
         if operation != "transact":
-            if var == "contract":
+            # if var == "contract":
                 if args:
                     res = contract.functions[name](*args).call()
                 else:
                     res = contract.functions[name]().call()
-            else:
-                if args:
-                    res = users.functions[name](*args).call()
-                else:
-                    res = users.functions[name]().call()
+            # else:
+                # if args:
+                    # res = users.functions[name](*args).call()
+                # else:
+                    # res = users.functions[name]().call()
         else:
-            if var == "contract":
+            # if var == "contract":
                 if args:
                     res = contract.functions[name](*args).transact()
                 else:
                     res = contract.functions[name]().transact()
-            else:
-                if args:
-                    res = users.functions[name](*args).transact()
-                else:
-                    res = users.functions[name]().transact()
+            # else:
+            #     if args:
+            #         res = users.functions[name](*args).transact()
+            #     else:
+            #         res = users.functions[name]().transact()
         return res
     except Exception as e:
         return str(e)

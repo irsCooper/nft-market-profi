@@ -2,9 +2,9 @@ set -eu
 clear;
 
 echo "[-] Clear Logs..."
-rm logs/network.log
-rm logs/deploy.log
-rm logs/interface.log
+# rm logs/network.log
+# rm logs/deploy.log
+# rm logs/interface.log
 
 sleep 2;
 
