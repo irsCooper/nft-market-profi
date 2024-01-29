@@ -1,13 +1,8 @@
-Compiled 252 Solidity files successfully (evm target: paris).
-HardhatError: HH701: There are multiple artifacts for contract "Contract", please use a fully qualified name.
-
-Please replace Contract for one of these options wherever you are trying to read its artifact:
-
-contracts/contract.sol:Contract
-contracts/old-contract.sol:Contract
-
-    at Artifacts._getArtifactPathFromFiles (/home/crowley/Музыка/profi-project/backend/node_modules/hardhat/src/internal/artifacts.ts:860:13)
+HardhatError: HH700: Artifact for contract "Users" not found. Did you mean "Timers"?
+    at Artifacts._handleWrongArtifactForContractName (/home/crowley/Музыка/profi-project/backend/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+    at Artifacts._getArtifactPathFromFiles (/home/crowley/Музыка/profi-project/backend/node_modules/hardhat/src/internal/artifacts.ts:852:19)
     at Artifacts._getArtifactPath (/home/crowley/Музыка/profi-project/backend/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
     at Artifacts.readArtifact (/home/crowley/Музыка/profi-project/backend/node_modules/hardhat/src/internal/artifacts.ts:71:26)
     at getContractFactory (/home/crowley/Музыка/profi-project/backend/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:107:22)
-    at main (/home/crowley/Музыка/profi-project/backend/scripts/deploy.js:38:20)
+    at main (/home/crowley/Музыка/profi-project/backend/scripts/deploy.js:41:17)

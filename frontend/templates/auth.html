@@ -1,18 +1,52 @@
 {% extends 'index.html' %}
 
 {% block main %}
+    <div class="auth">
+      <h1>Подключение к Metamask</h1>
+      <button id="auth">Войти</button>
+    </div>
 
-  <div>
-    <h1>Войти</h1>
-    <form method="post">
-      <label>Публичный ключ</label>
-      <input type="text" name="address" placeholder="Введите адрес" title="Введите адрес">
+
+    <script type="text/javascript">
+      if (typeof window.ethereum !== 'undefined') {
+        const ethereum = window.ethereum;
+        const Button = document.getElementById('auth');
+
+        Button.addEventListener('click', () => {
+          // Запрашиваем разрешение на доступ к аккаунту пользователя
+          ethereum.enable()
+            .then(accounts => {
+              // Передаем выбранный аккаунт на сервер Flask
+              const selectedAccount = accounts[0];
+      
+              fetch('/auth', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ account: selectedAccount })
+              })
+            })
+        });
+      
+        document.body.appendChild(loginButton);
+      } else {
+        console.error('Расширение Metamask не доступно');
+      }
+    </script>
+
     
-      <label>Приватный ключ</label>
-      <input type="password" name="password" placeholder="Введите приватный ключ" title="Введите приватрый ключ">
-
-      <button>Войти</button>
-    </form>
-  </div>
+    {% if get_flashed_messages() != [] %}
+        <div class="flash" id="window">
+            <figure>
+                <a href="#" class="close"></a>
+                <figcaption>
+                    {% for mes in get_flashed_messages() %}
+                        <p>{{mes}}</p>
+                    {% endfor %}
+                </figcaption>
+            </figure>
+        </div>
+    {% endif %}
 
 {% endblock %}

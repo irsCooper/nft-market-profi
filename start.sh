@@ -25,7 +25,7 @@ echo "[+] Network is started!"
 echo "[+] Compile and deploy contract..."
 npx hardhat compile > ../logs/deploy.log 2>&1 &
 
-sleep 20;
+sleep 30;
 
 npx hardhat run --network localhost scripts/deploy.js > ../logs/deploy.log 2>&1 &
 

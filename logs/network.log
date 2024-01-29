@@ -69,4 +69,39 @@ Private Key: 0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e
 WARNING: These accounts, and their private keys, are publicly known.
 Any funds sent to them on Mainnet or any other live network WILL BE LOST.
 
+eth_accounts
+hardhat_metadata
+hardhat_metadata (2)
+hardhat_metadata (3)
+hardhat_metadata (4)
+hardhat_metadata (5)
+hardhat_metadata (6)
+hardhat_metadata (7)
+hardhat_metadata (8)
+hardhat_metadata (9)
+hardhat_metadata (10)
+hardhat_metadata (11)
+hardhat_metadata (12)
+hardhat_metadata (13)
+hardhat_metadata (14)
+hardhat_metadata (15)
+hardhat_metadata (16)
+hardhat_metadata (17)
+hardhat_metadata (18)
+hardhat_metadata (19)
+hardhat_metadata (20)
+eth_blockNumber
+eth_getBlockByNumber
+eth_feeHistory
+eth_maxPriorityFeePerGas - Method not supported
+eth_sendTransaction
+  Contract deployment: <UnrecognizedContract>
+  Contract address:    0x5fbdb2315678afecb367f032d93f642f64180aa3
+  Transaction:         0x6303fae5b6d1da1d19c0099d9f7bfa7e36822d1d606f90136efa100044773b17
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            5822924 of 30000000
+  Block #1:            0xdee043024d3f9c115363b85b19a393b8260b021443005cc162712461e1b59c3e
+
+eth_getTransactionByHash
 Terminated

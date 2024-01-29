@@ -38,9 +38,6 @@ async function main() {
   const Contract = await ethers.getContractFactory("Contract");
   const contract = await Contract.deploy();
 
-  const Users = await ethers.getContractFactory("Users");
-  const users = await Users.deploy();
-
   // await myContract.waitForDeployment();
 
 
@@ -55,11 +52,6 @@ async function main() {
   data.address = contract.target;  
   // data.address = contract.address; //for home
   fs.writeFileSync(filePath, JSON.stringify(data));
-
-  let dataUsers = fs.existsSync(filePathUsers) ? JSON.parse(fs.readFileSync(filePathUsers)) : {};
-  dataUsers.address = users.target;  
-  // dataUsers.address = users.address; //for home
-  fs.writeFileSync(filePathUsers, JSON.stringify(dataUsers));
 }
 
 main()

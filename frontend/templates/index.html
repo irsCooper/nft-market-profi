@@ -16,12 +16,11 @@
             <div>
                 <a href="/">Nft</a>
                 <a href="/actions">Аукционы</a>
-                <a href="/buy_profi">Купить Profi</a>
                 {% if session.get('user') != None %}
                     <a href="/lk">Мои данные</a>
                     <a href="/logout">Выйти</a>
                 {% else %}
-                    <a href="/login">Войти</a>
+                    <a href="/auth">Войти</a>
                 {% endif %}
             </div>
         </menu>

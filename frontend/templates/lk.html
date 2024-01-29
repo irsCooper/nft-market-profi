@@ -1,0 +1,100 @@
+{% extends 'index.html' %}
+
+{% block main %}
+
+    <div class="lk">
+        <div class="block-user">
+            <div class="info">
+                <p>Имя: {{user[0][0]}}</p>
+                <p>Реферальный код: {{user[0][1]}}</p>
+                <p>Процент скидки: {{user[0][2]}}</p>
+                <p>Баланс Profi: {{user[1]}}</p>
+
+                <form method="post">
+                    <input type="text" name="ref" placeholder="Введите реферальный код" title="Введите реферальный код" required>
+                    <button name="id" value="100">активировать</button>
+                </form>
+
+                <form method="post">
+                    <input type="text" name="amount" placeholder="введите количество" title="введите количество" required>
+                    <button name="id" value="102">купить profi</button>
+                </form>
+            </div>
+
+            {% if user[0][0] == "Owner" %}
+                <div class="set-collection">
+                    <h1>Создать коллекцию</h1>
+                    <form method="post">
+                        <input type="text" name="name" placeholder="название коллекции" title="название коллекции" required>
+                        <input type="text" name="description" placeholder="описание коллекции" title="описание коллекции" required>
+                        <button name="id" value="101">подтвердить</button>
+                    </form>
+                </div>
+
+                <a href="/set_nft">создать nft</a>
+            {% endif %}
+        </div>
+
+    
+        <div class="block-items">
+            <div class="items">
+                <h1>Nft пользователя</h1>
+                {% if nfts == [] %}
+                    <p>Пока тут пусто</p>
+                {% endif %}
+
+                {% for nft in nfts %}
+                    <div class="item">
+                        <img src="../images/{{nft[1][3]}}">
+                        <p>Название: {{nft[1][1]}}</p>
+                        <p>Описание: {{nft[1][2]}}</p>
+                        <p>Всего выпущено: {{nft[1][4]}}</p>
+                        <p>Время создания: {{nft[1][5]}}</p>
+                        {% if nft[4] == true %}
+                            <p>Принадлежит коллекции: {{nft[5]}}</p>
+                            <p>Описание коллекции: {{nft[6]}}</p>
+                        {% endif %}
+
+                        <form method="post">
+                            <input type="text" name="price" placeholder="стоимость" title="стоимость" required>
+                            <button name="id" value="{{nft[1][0]}}">продать</button>
+                        </form>>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="items">
+                <h1>Коллекции пользователя</h1>
+                {% if collections == [] %}
+                    <p>Пока тут пусто</p>
+                {% endif %}
+
+                {% for col in collections %}
+                    <div class="item">
+                        <p>Название: {{col[1]}}</p>
+                        <p>Описание: {{col[2]}}</p>
+                        {% if user[0][0] == "Owner" %}
+                            <a href="/set_nft_in_collection/{{col[0]}}">добавить nft</a>
+                            <a href="/set_action/{{col[0]}}">выставить на аукцион</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if get_flashed_messages() != [] %}
+        <div class="flash" id="window">
+            <figure>
+                <a href="#" class="close"></a>
+                <figcaption>
+                    {% for mes in get_flashed_messages() %}
+                        <p>{{mes}}</p>
+                    {% endfor %}
+                </figcaption>
+            </figure>
+        </div>
+    {% endif %}
+
+    
+{% endblock %}
