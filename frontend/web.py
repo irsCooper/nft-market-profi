@@ -9,6 +9,7 @@ if w3.is_connected:
     print("--------------")
     print("Is connected")
     print("--------------")
+    print(contract.all_functions())
 else:
     print("Disconnected")
 
@@ -19,7 +20,7 @@ def require_user(signature, message):
     
 
 
-def func(name: str, args=None, operation=None):
+def func(name, args=None, operation=None):
     try:
         if operation != "transact":
             if args:
@@ -45,16 +46,33 @@ def key_check(public_key):
         return str(e)
     
 
+# def buy(acc, amount:int):
+#     try:
+#         func_name = "BuyProfi"
+#         func_params = [amount]
+#         eth = amount
+
+#         transaction = contract.functions[func_name](*func_params).transact({
+#             'from': w3.to_checksum_address(acc),
+#             'to': w3.to_checksum_address('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'), #config["address"], 
+#             'gasPrice': w3.to_wei('50', 'gwei'),
+#             'value': w3.to_wei(eth, 'wei'),
+#             'gas': 200000
+#         })
+#         return transaction
+#     except Exception as e:
+#         return str(e)
+    
 def buy(amount):
     try:
-        func_name = "BuyProfi"
-        func_params = [amount]
-        eth = amount
+        function_name = 'Buy_Profi'
+        function_params = [amount]
+        eth = amount 
 
-        transaction = contract.functions[func_name](*func_params).transact({
+        transaction = contract.functions[function_name](*function_params).transact({
             'to':config["address"],
-            # 'gasPrice': w3.to_wei('50', 'gwei'),
-            'value': 0,
+            'gasPrice': w3.to_wei('50', 'gwei'),
+            'value': eth,
             'gas': 200000
         })
         return transaction

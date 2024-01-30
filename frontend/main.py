@@ -29,13 +29,14 @@ def index():
 
 @app.route('/auth', methods=['GET', 'POST'])
 def login():
-    if session.get('user') != None: return redirect('/')
+    if session.get('user') != None: return redirect('/lk')
     
     if request.method == 'POST': 
         account = request.json.get('account')
         res = web.key_check(account)
         if type(res) != str:
             session['user'] = res
+            session['address'] = account
         else:
             flash(res)        
     return render_template('auth.html')
@@ -53,33 +54,30 @@ def lk():
     if session.get('user') == None: return redirect('/')
     
     if request.method == 'POST': 
-        if int(request.form.get('id')) < 90:
-            sell = web.func("SellNft", args=[
-                request.form.get("id", type=int),
-                request.form.get("price", type=int)],
-                operation="transact")
-            check_result(sell) 
-            
-        else:
-            if int(request.form.get('id')) == 100:
+            if request.form.get('id') == "EnterReferralCode":
                 code = web.func("EnterReferralCode", args=[
                     request.form.get('ref')], 
                     operation="transact")
                 check_result(code)
                 
-            elif int(request.form.get('id')) == 102:
-                token = web.buy(request.form.get('amount', type=int))
-                check_result(token)
-                
-            else:   
+            elif request.form.get('id') == "collection":   
                 set_collection = web.func("SetCollection", args=[
                     request.form.get('name'),
                     request.form.get('description')],
                     operation="transact")
                 check_result(set_collection)
-                
+            else:
+                sell = web.func("SellNft", args=[
+                    request.form.get("id", type=int),
+                    request.form.get("price", type=int)],
+                    operation="transact")
+                check_result(sell)
+
+    print(str(web.func("Auth")))
+    print("balanse tokenbank: " + str(web.func("balanceOf", args=["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"])))
+    print("balanse user: " + str(web.func("balanceOf", args=["0x70997970C51812dc3A010C7d01b50e0d17dc79C8"])))
     return render_template('lk.html', 
-                            user=session['user'],
+                            user=web.func("Auth"),
                             nfts=web.func("GetAllUser_Nfts"),
                             collections=web.func("GetAllUser_Collection"))
     
@@ -88,6 +86,7 @@ def set_nft():
     if session.get('user') != None:
         if request.method == 'POST':
             if 'image' not in request.files:
+                print("photo: " + request.files['image'].filename)
                 flash("С картинкой что-то не так, повторите попытку")
             else:
                 print("photo: " + request.files['image'].filename)

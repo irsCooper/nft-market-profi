@@ -16,13 +16,10 @@ contract Contract is ERC20, ERC1155 {
     // для владельца второй
     // почему так? потому что в тз написано, что у Owner всего 100000 токенов, по этому делаем так 
 
-    // address Owner = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
     //для remix
-    // address tokensbank = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
-    // address Owner = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
+    // address Owner = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
 
-    address tokensbank = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
-    address Owner = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
+    address Owner = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
 
     uint public unicue_nft; //сколько видов nftшек создано в системе (то же самое что id)
     uint public unicue_collection; //сколько создано коллекций в системе (то же самое что id)
@@ -125,21 +122,11 @@ contract Contract is ERC20, ERC1155 {
         return bet_to_action[id];
     }
 
-// +
-    function BuyProfi(uint amount) public payable {
-        // require(msg.value == amount, "Invalid msg.value");
-        payable(tokensbank).transfer(amount);
-        ERC20._transfer(tokensbank, msg.sender, amount);
-
-    }
-
 
 // +
     function Auth() public view returns(User memory _user, uint balance) {
         _user = user[msg.sender];
         balance = ERC20.balanceOf(msg.sender);
-        // refCode = UserReferralCode[msg.sender];
-        // discont = Discont[msg.sender];
     }
 
     
@@ -222,7 +209,8 @@ contract Contract is ERC20, ERC1155 {
 
     // +
     function SellNft(uint id, uint newPrice) public  {
-        require(id <= unicue_nft && ERC1155.balanceOf(msg.sender, id) > 0 && SellOrNotSell_NFT[id] == false, "invalid input"); 
+        // && SellOrNotSell_NFT[id] == false
+        require(id <= unicue_nft && ERC1155.balanceOf(msg.sender, id) > 0, "invalid input"); 
 
         SellOrNotSell_NFT[id] = true;
         Sell_Only_Nft.push(Sell_Nft(
@@ -421,7 +409,7 @@ contract Contract is ERC20, ERC1155 {
         require(MyReferralCodeBool[code] == false, "this code alreadyactived");
 
         user[MyReferralCodeAddress[code]].Discont += 1;
-        ERC20._transfer(tokensbank, msg.sender, 100);
+        ERC20._mint(msg.sender, 100);
 
         MyReferralCodeBool[code] = true;
     }
@@ -433,30 +421,29 @@ contract Contract is ERC20, ERC1155 {
     //ERC1155("./images/") - тут указывается uri адрес для токена, но мы пишем сюда любую заглушку, ибо оно не используется в нашем коде
     constructor() ERC20("Professional", "PROFI") ERC1155("./images/") {
         // в папках проекта изменить параметр в функции decimals контракта ERC20 с 18и на 6 (так указано в тз)
-        ERC20._mint(tokensbank, 1000000);
+        ERC20._mint(Owner, 1000000);
 
 
         user[Owner] = User("Owner", "PROFI70992024", 0);
-        ERC20._transfer(tokensbank, Owner, 100000);
 
-        user[0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC] = User("Tom", "PROFI3C442024", 0);
-        ERC20._transfer(tokensbank, 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, 200000);
+        user[0x70997970C51812dc3A010C7d01b50e0d17dc79C8] = User("Tom", "PROFI3C442024", 0);
+        ERC20._transfer(Owner, 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 200000);
 
-        user[0x90F79bf6EB2c4f870365E785982E1f101E93b906] = User("Max", "PROFI90F72024", 0);
-        ERC20._transfer(tokensbank, 0x90F79bf6EB2c4f870365E785982E1f101E93b906, 300000);
+        user[0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC] = User("Max", "PROFI90F72024", 0);
+        ERC20._transfer(Owner, 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, 300000);
 
-        user[0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65] = User("Jack", "PROFI15d32024", 0);
-        ERC20._transfer(tokensbank, 0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65, 400000);
+        user[0x90F79bf6EB2c4f870365E785982E1f101E93b906] = User("Jack", "PROFI15d32024", 0);
+        ERC20._transfer(Owner, 0x90F79bf6EB2c4f870365E785982E1f101E93b906, 400000);
 
         //remix
-        // user[0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db] = User("Tom", "PROFI4B202024", 0);
-        // ERC20._transfer(tokensbank, 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db, 200000);
+        // user[0x70997970C51812dc3A010C7d01b50e0d17dc79C8] = User("Tom", "PROFI4B202024", 0);
+        // ERC20._transfer(Owner, 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 200000);
 
-        // user[0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB] = User("Max", "PROFI78732024", 0);
-        // ERC20._transfer(tokensbank, 0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB, 300000);
+        // user[0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db] = User("Max", "PROFI78732024", 0);
+        // ERC20._transfer(Owner, 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db, 300000);
 
-        // user[0x617F2E2fD72FD9D5503197092aC168c91465E7f2] = User("Jack", "PROFI617F2024", 0);
-        // ERC20._transfer(tokensbank, 0x617F2E2fD72FD9D5503197092aC168c91465E7f2, 400000);
+        // user[0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB] = User("Jack", "PROFI617F2024", 0);
+        // ERC20._transfer(Owner, 0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB, 400000);
     }
 
 }
