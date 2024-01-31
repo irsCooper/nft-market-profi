@@ -14,6 +14,8 @@
                     <input type="text" name="ref" placeholder="Введите реферальный код" title="Введите реферальный код" required>
                     <button name="id" value="EnterReferralCode">активировать</button>
                 </form>
+
+                <a href="/set_nft">создать nft</a>
             </div>
 
             {% if user[0][0] == "Owner" %}
@@ -25,8 +27,6 @@
                         <button name="id" value="collection">подтвердить</button>
                     </form>
                 </div>
-
-                <a href="/set_nft">создать nft</a>
             {% endif %}
         </div>
 
@@ -34,21 +34,20 @@
         <div class="block-items">
             <div class="items">
                 <h1>Nft пользователя</h1>
-                {% if nfts == [] %}
+                {% if userNfts == [] %}
                     <p>Пока тут пусто</p>
                 {% endif %}
 
-                {% for nft in nfts %}
+                {% for nft in userNfts %}
                     <div class="item">
-                        <img src="walker_nft2.png">
-                        <p>{{nft[1][3]}}</p>
+                        <img src="../static/images/{{nft[1][3]}}">
                         <p>Название: {{nft[1][1]}}</p>
                         <p>Описание: {{nft[1][2]}}</p>
                         <p>Всего выпущено: {{nft[1][4]}}</p>
                         <p>Время создания: {{nft[1][5]}}</p>
-                        {% if nft[4] == true %}
-                            <p>Принадлежит коллекции: {{nft[5]}}</p>
-                            <p>Описание коллекции: {{nft[6]}}</p>
+                        {% if nft[4] != "" %}
+                            <p>Принадлежит коллекции: {{nft[4]}}</p>
+                            <p>Описание коллекции: {{nft[5]}}</p>
                         {% endif %}
 
                         <form method="post">
@@ -61,6 +60,8 @@
 
             <div class="items">
                 <h1>Коллекции пользователя</h1>
+                <p>Пока наша платформа не может отображать nft при отображении коллекции, но вы можете их видеть 
+                    в списке всех nft, будут видны параметры коллекции, к которой принаджежит ваша nft</p>
                 {% if collections == [] %}
                     <p>Пока тут пусто</p>
                 {% endif %}

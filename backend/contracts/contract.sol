@@ -37,7 +37,6 @@ contract Contract is ERC20, ERC1155 {
         NFT NFT;
         address Owner;     //нужно заполнять и учитывать только когда показываем при продаже
         uint Price;        //нужно заполнять и учитывать только когда показываем при продаже
-        bool In_Colection; //на фронтке мы будем обрабатывать этот параметр, если true, то показывает инфу ниже
         string Name_Collection;
         string Description_Collection;
     }
@@ -74,7 +73,6 @@ contract Contract is ERC20, ERC1155 {
 
     // nft
     mapping (uint => NFT) public nft; //nft info
-    mapping (uint => bool) nft_in_collection; //если nft в коллекции, тут true
     mapping (uint => uint) nft_number_collection; //тут лежить номер коллекции, если nft находится в ней
     mapping (address => uint) user_amount_unicue_nft; // это нужно для удобства вывода nft пользователя
     mapping (uint => bool) SellOrNotSell_NFT; //get address user and id -> nft инфу о которой хотим узнать
@@ -128,9 +126,8 @@ contract Contract is ERC20, ERC1155 {
     
     // +
     function GetAllUser_Nfts() public view returns(Sell_Nft[] memory) {
-        // uint ost = unicue_nft - user_amount_unicue_nft[msg.sender];
-        // Sell_Nft[] memory _nft = new Sell_Nft[](unicue_nft - ost);
-        Sell_Nft[] memory _nft = new Sell_Nft[](user_amount_unicue_nft[msg.sender]);
+        uint ost = unicue_nft - user_amount_unicue_nft[msg.sender];
+        Sell_Nft[] memory _nft = new Sell_Nft[](unicue_nft - ost);
 
         uint push;
 
@@ -141,7 +138,6 @@ contract Contract is ERC20, ERC1155 {
                     nft[i],
                     address(0), //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
                     0,          //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
-                    nft_in_collection[i],
                     collection[nft_number_collection[i]].Name,
                     collection[nft_number_collection[i]].Description
                 );
@@ -155,9 +151,8 @@ contract Contract is ERC20, ERC1155 {
 // +
     function GetAllUser_Collection() public view returns(Collection[] memory) {
         //работает - не трогаем
-        // uint ost = unicue_collection - user_amount_unicue_collection[msg.sender];
-        // Collection[] memory _collection = new Collection[](unicue_collection - ost);
-        Collection[] memory _collection = new Collection[](user_amount_unicue_collection[msg.sender]);
+        uint ost = unicue_collection - user_amount_unicue_collection[msg.sender];
+        Collection[] memory _collection = new Collection[](unicue_collection - ost);
 
         uint push;
 
@@ -214,7 +209,6 @@ contract Contract is ERC20, ERC1155 {
             nft[id],
             msg.sender,
             newPrice,
-            nft_in_collection[id],
             collection[nft_number_collection[id]].Name,
             collection[nft_number_collection[id]].Description
         ));
@@ -291,7 +285,6 @@ contract Contract is ERC20, ERC1155 {
         require(amount > 0 && idCollection <= unicue_collection, "invalid amount or collection does not exist");
 
         //назначаем параметры того, что нфтишка принадлешить коллекции
-        nft_in_collection[unicue_nft] = true;
         nft_number_collection[unicue_nft] = idCollection;
 
         //добавляем её в коллекцию
