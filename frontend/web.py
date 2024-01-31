@@ -13,6 +13,7 @@ if w3.is_connected:
 else:
     print("Disconnected")
 
+
 def require_user(signature, message):
     segn_mess = w3.eth.account.messages.encode_defunct(text=message)
     recover_address = w3.eth.Account.recover_message(segn_mess, signature=signature)

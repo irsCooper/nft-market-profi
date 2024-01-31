@@ -40,7 +40,8 @@
 
                 {% for nft in nfts %}
                     <div class="item">
-                        <img src="../images/{{nft[1][3]}}">
+                        <img src="walker_nft2.png">
+                        <p>{{nft[1][3]}}</p>
                         <p>Название: {{nft[1][1]}}</p>
                         <p>Описание: {{nft[1][2]}}</p>
                         <p>Всего выпущено: {{nft[1][4]}}</p>
@@ -53,7 +54,7 @@
                         <form method="post">
                             <input type="text" name="price" placeholder="стоимость" title="стоимость" required>
                             <button name="id" value="{{nft[1][0]}}">продать</button>
-                        </form>>
+                        </form>
                     </div>
                 {% endfor %}
             </div>

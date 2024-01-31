@@ -12,10 +12,6 @@ import "./standart_token/token/ERC20/ERC20.sol";
 
 contract Contract is ERC20, ERC1155 {
 
-    // для хранения profi токенов, берём первый адрес в сети
-    // для владельца второй
-    // почему так? потому что в тз написано, что у Owner всего 100000 токенов, по этому делаем так 
-
     //для remix
     // address Owner = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
 

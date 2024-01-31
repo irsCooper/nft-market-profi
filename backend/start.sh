@@ -9,7 +9,6 @@ echo "[-] Clear Logs..."
 sleep 2;
 
 echo "[-] Cleaning Network..."
-cd ./backend
 npx hardhat clean
 
 sleep 5;

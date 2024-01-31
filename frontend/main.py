@@ -73,9 +73,6 @@ def lk():
                     operation="transact")
                 check_result(sell)
 
-    print(str(web.func("Auth")))
-    print("balanse tokenbank: " + str(web.func("balanceOf", args=["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"])))
-    print("balanse user: " + str(web.func("balanceOf", args=["0x70997970C51812dc3A010C7d01b50e0d17dc79C8"])))
     return render_template('lk.html', 
                             user=web.func("Auth"),
                             nfts=web.func("GetAllUser_Nfts"),
@@ -85,16 +82,15 @@ def lk():
 def set_nft():
     if session.get('user') != None:
         if request.method == 'POST':
-            if 'image' not in request.files:
-                print("photo: " + request.files['image'].filename)
+            if not request.form.get('image'):
                 flash("С картинкой что-то не так, повторите попытку")
             else:
-                print("photo: " + request.files['image'].filename)
+                print("photo: " + request.form.get('image'))
                 res = web.func("SetNft",args=[
                     request.form.get("name"),
                     request.form.get("description"),
-                    request.files['image'].filename,
-                    request.form.get("amount")],
+                    request.form.get('image'),
+                    request.form.get("amount", type=int)],
                     operation="transact")
                 check_result(res)
         return render_template("set_nft.html")

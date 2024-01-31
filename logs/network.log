@@ -96,15 +96,477 @@ eth_feeHistory
 eth_sendTransaction
   Contract deployment: <UnrecognizedContract>
   Contract address:    0x5fbdb2315678afecb367f032d93f642f64180aa3
-  Transaction:         0x4c00541d189a09ecf998809fdee107bf6881a9aa4c6cb2996a1ea91620370c67
+  Transaction:         0x57907903097f6f2864b492fc1a41a2c48065d8915271b0450553da13fefee6c4
   From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
   Value:               0 ETH
-  Gas used:            5816265 of 30000000
-  Block #1:            0x064a5935af63738bd82fbc3fa0d798504cc03036fb6a803613a96b64434b0af0
+  Gas used:            5684957 of 30000000
+  Block #1:            0x18d3cc8ea9a4cc2fec3af3f3a9fbe71d02ba04de3fd64761dfbb51e1722b9c16
 
 eth_getTransactionByHash
 eth_chainId
-eth_accounts
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_chainId (2)
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_chainId (2)
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_blockNumber
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
 eth_call
   Contract call:       <UnrecognizedContract>
   From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
@@ -284,3 +746,90 @@ eth_call
   From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
   To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
 
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_chainId
+eth_call
+  Contract call:       <UnrecognizedContract>
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_blockNumber
+net_version
+eth_getBlockByNumber
