@@ -37,6 +37,7 @@ contract Contract is ERC20, ERC1155 {
         NFT NFT;
         address Owner;     //нужно заполнять и учитывать только когда показываем при продаже
         uint Price;        //нужно заполнять и учитывать только когда показываем при продаже
+        bool InCollection;
         string Name_Collection;
         string Description_Collection;
     }
@@ -73,6 +74,7 @@ contract Contract is ERC20, ERC1155 {
 
     // nft
     mapping (uint => NFT) public nft; //nft info
+    mapping (uint => bool) nftInCollection;
     mapping (uint => uint) nft_number_collection; //тут лежить номер коллекции, если nft находится в ней
     mapping (address => uint) user_amount_unicue_nft; // это нужно для удобства вывода nft пользователя
     mapping (uint => bool) SellOrNotSell_NFT; //get address user and id -> nft инфу о которой хотим узнать
@@ -138,6 +140,7 @@ contract Contract is ERC20, ERC1155 {
                     nft[i],
                     address(0), //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
                     0,          //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
+                    nftInCollection[i],
                     collection[nft_number_collection[i]].Name,
                     collection[nft_number_collection[i]].Description
                 );
@@ -209,6 +212,7 @@ contract Contract is ERC20, ERC1155 {
             nft[id],
             msg.sender,
             newPrice,
+            nftInCollection[id],
             collection[nft_number_collection[id]].Name,
             collection[nft_number_collection[id]].Description
         ));
@@ -286,6 +290,8 @@ contract Contract is ERC20, ERC1155 {
 
         //назначаем параметры того, что нфтишка принадлешить коллекции
         nft_number_collection[unicue_nft] = idCollection;
+
+        nftInCollection[unicue_nft] = true;
 
         //добавляем её в коллекцию
         collection[idCollection].NftInCollection.push(unicue_nft);

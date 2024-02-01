@@ -28,8 +28,16 @@
     </header>
 
     <main id="main">
-        {% block main %}
-        {% endblock %}
+
+        <div id="contend">
+            {% block main %}
+            {% endblock %}
+        </div>
+
+        <div id="auth">
+            {% block auth %}
+            {% endblock %}
+        </div>
     </main>
 
     <footer>
@@ -43,7 +51,7 @@
         setInterval(function()
         {
             $('#menu').load(document.URL + ' #menu');
-            $('#main').load(document.URL + ' #main');
+            $('#auth').load(document.URL + ' #auth');
         }, 5000)
     </script>
     <!--  -->

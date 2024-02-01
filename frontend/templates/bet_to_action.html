@@ -6,11 +6,15 @@
         <p>Пока тут пусто</p>
     {% endif %}
 
-    {% for bet in bets - 1 %}
-        <div>
-            <p>Владелец: {{bet[0]}}</p>
-            <p>Ставка: {{bet[1]}}</p>
-        </div>
+    {% for bet in bets %}
+        {% if bet[1] != 0 %}
+            <div>
+                <p>Владелец: {{bet[0]}}</p>
+                <p>Ставка: {{bet[1]}}</p>
+            </div>
+        {% else %}
+            <p>Пока тут пусто</p>
+        {% endif %}
     {% endfor %}
 
 {% endblock %}
