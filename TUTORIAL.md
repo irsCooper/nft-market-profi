@@ -14,7 +14,7 @@
 
 # <a id="ПО">Для работы нам подадобится следующее ПО:</a> 
 - [Hardhat](https://hardhat.org/hardhat-runner/docs/getting-started)
-- [Python:latest](https://www.python.org/downloads/)
+- [Python](https://www.python.org/downloads/)
 - [Web3](https://pypi.org/project/web3/)
 - [Flask](https://pypi.org/project/Flask/)
 - [OpenZeppelin standart token ERC1155 and ERC20](https://github.com/OpenZeppelin/openzeppelin-contracts)
