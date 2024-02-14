@@ -128,8 +128,9 @@ contract Contract is ERC20, ERC1155 {
     
     // +
     function GetAllUser_Nfts() public view returns(Sell_Nft[] memory) {
-        uint ost = unicue_nft - user_amount_unicue_nft[msg.sender];
-        Sell_Nft[] memory _nft = new Sell_Nft[](unicue_nft - ost);
+        // uint ost = unicue_nft - user_amount_unicue_nft[msg.sender];
+        // Sell_Nft[] memory _nft = new Sell_Nft[](unicue_nft - ost);
+        Sell_Nft[] memory _nft = new Sell_Nft[](user_amount_unicue_nft[msg.sender]);
 
         uint push;
 
@@ -154,8 +155,9 @@ contract Contract is ERC20, ERC1155 {
 // +
     function GetAllUser_Collection() public view returns(Collection[] memory) {
         //работает - не трогаем
-        uint ost = unicue_collection - user_amount_unicue_collection[msg.sender];
-        Collection[] memory _collection = new Collection[](unicue_collection - ost);
+        // uint ost = unicue_collection - user_amount_unicue_collection[msg.sender];
+        // Collection[] memory _collection = new Collection[](unicue_collection - ost);
+        Collection[] memory _collection = new Collection[](user_amount_unicue_collection[msg.sender]);
 
         uint push;
 
@@ -244,10 +246,10 @@ contract Contract is ERC20, ERC1155 {
         user_amount_unicue_nft[_owner] -= 1;   
 
         //если не последняя, переписываем на её место последнюю, ибо в солидити можно удалять только последний элемент
-        if (id < Sell_Only_Nft.length - 1) {
+        // if (id < Sell_Only_Nft.length - 1) {
             Sell_Only_Nft[Sell_Only_Nft.length - 1].Id = id; //это делать обязательно, иначе возникнет путаница и всё сломается
             Sell_Only_Nft[id] = Sell_Only_Nft[Sell_Only_Nft.length - 1];
-        }
+        // }
 
         Sell_Only_Nft.pop();
         SellOrNotSell_NFT[nft_id] = false; //была исправлена ошибка
@@ -379,13 +381,13 @@ contract Contract is ERC20, ERC1155 {
 
         //если это не последний аукцион, перепишем на место того, который хотим удалить последний
         //так делаем потому что .pop() может удалить только последный элемент
-        if (id < action.length) {
+        // if (id < action.length) {
             //если мы переписываем аукцион, то его айдишник изменится, значит и ставки мы тоже должны переписать
             bet_to_action[id] = bet_to_action[action.length - 1];
 
             action[action.length - 1].Id = id;
             action[id] = action[action.length - 1];
-        }
+        // }
 
         //обязательно чистим мапинг 
         delete bet_to_action[action.length - 1];
@@ -431,8 +433,8 @@ contract Contract is ERC20, ERC1155 {
         ERC20._transfer(Owner, 0x90F79bf6EB2c4f870365E785982E1f101E93b906, 400000);
 
         //remix
-        // user[0x70997970C51812dc3A010C7d01b50e0d17dc79C8] = User("Tom", "PROFI4B202024", 0);
-        // ERC20._transfer(Owner, 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 200000);
+        // user[0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2] = User("Tom", "PROFI4B202024", 0);
+        // ERC20._transfer(Owner, 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2, 200000);
 
         // user[0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db] = User("Max", "PROFI78732024", 0);
         // ERC20._transfer(Owner, 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db, 300000);
