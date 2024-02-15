@@ -4,10 +4,10 @@ set -eu
 
 clear;
 
-# echo "-------------------"
-# echo "Install Dependencies..."
-# echo "-------------------"
-# sudo npm install
+echo "-------------------"
+echo "Install Dependencies..."
+echo "-------------------"
+sudo npm install
 
 echo "-------------------"
 echo "[-] Очистка сети..."
