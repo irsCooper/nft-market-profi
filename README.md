@@ -17,4 +17,6 @@ git clone https://github.com/irsCooper/profi-ethereum-erc1155.git
 bash start.sh
 ```
 
+# при взаимодействии с веб приложением все ошибки отображаются внизу страницы
+
 #### Если вам захочется повторить этот проект вы можете посмотреть подробный туториал [вот тут :)](https://github.com/irsCooper/profi-ethereum-erc1155/blob/main/TUTORIAL.md)
