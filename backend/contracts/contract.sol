@@ -40,6 +40,7 @@ contract Contract is ERC20, ERC1155 {
         bool InCollection;
         string Name_Collection;
         string Description_Collection;
+        bool SellOrNotSell;
     }
 
     struct Collection {
@@ -143,7 +144,8 @@ contract Contract is ERC20, ERC1155 {
                     0,          //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
                     nftInCollection[i],
                     collection[nft_number_collection[i]].Name,
-                    collection[nft_number_collection[i]].Description
+                    collection[nft_number_collection[i]].Description,
+                    SellOrNotSell_NFT[i]
                 );
                 push += 1;
             } 
@@ -207,6 +209,10 @@ contract Contract is ERC20, ERC1155 {
     function SellNft(uint id, uint newPrice) public  {
         // && SellOrNotSell_NFT[id] == false
         require(id <= unicue_nft && ERC1155.balanceOf(msg.sender, id) > 0, "invalid input"); 
+        require(SellOrNotSell_NFT[id] == false, "this nft already sell");
+        if(nftInCollection[id] == true) {
+            require(owner_collection[nft_number_collection[id]] != Owner, "you are not sell this nft");
+        }
 
         SellOrNotSell_NFT[id] = true;
         Sell_Only_Nft.push(Sell_Nft(
@@ -216,7 +222,8 @@ contract Contract is ERC20, ERC1155 {
             newPrice,
             nftInCollection[id],
             collection[nft_number_collection[id]].Name,
-            collection[nft_number_collection[id]].Description
+            collection[nft_number_collection[id]].Description,
+            SellOrNotSell_NFT[id]
         ));
     }
 
@@ -227,7 +234,7 @@ contract Contract is ERC20, ERC1155 {
         address _owner = Sell_Only_Nft[id].Owner;
         uint nft_id = Sell_Only_Nft[id].NFT.Id;
 
-        require(id <= Sell_Only_Nft.length && _owner != msg.sender && ERC20.balanceOf(msg.sender) >= price, "nft problem");
+        require(SellOrNotSell_NFT[nft_id] == true && id <= Sell_Only_Nft.length && _owner != msg.sender && ERC20.balanceOf(msg.sender) >= price, "nft problem");
 
         //переводим монетки
         ERC20._transfer(msg.sender, _owner, price);

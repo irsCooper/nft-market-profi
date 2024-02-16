@@ -2,7 +2,6 @@
 
 set -eu
 
-clear;
 
 echo "-------------------"
 echo "Install Dependencies..."

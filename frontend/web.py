@@ -40,9 +40,12 @@ def func(name, args=None, operation=None):
 
 def key_check(public_key):
     try:
-        print("to_checksum_address" + w3.to_checksum_address(public_key))
         w3.eth.default_account = w3.to_checksum_address(public_key)
-        return func("Auth")
+        res = func("Auth")
+        if res[0][0] != "":
+            return res
+        else:
+            return "Invalid key"
     except Exception as e:
         return str(e)
     
