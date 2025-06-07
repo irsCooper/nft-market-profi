@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% block main %}
+
+    <div class="form">
+        <h1>Создать nft для коллекции</h1>
+        <form method="post">
+            <label>Название</label>
+            <input id="string" type="text" name="name" placeholder="введите название" title="введите название" required>
+        
+            
+            <label>Описание</label>
+            <input id="string" type="text" name="description" placeholder="введите описание" title="введите описание" required>
+        
+
+            <label>Количество</label>
+            <input id="string" type="text" name="amount" placeholder="введите количество" title="введите количество" required>
+        
+
+            <label class="input-file">
+                <input type="file" name="image">		
+                <span>Выберите файл</span>
+            </label>
+
+            <button type="submit">создать</button>
+        </form>
+    </div>
+
+    {% if get_flashed_messages() != [] %}
+        <div class="flash" id="window">
+            <figure>
+                <a href="#" class="close"></a>
+                <figcaption>
+                    {% for mes in get_flashed_messages() %}
+                        <p>{{mes}}</p>
+                    {% endfor %}
+                </figcaption>
+            </figure>
+        </div>
+    {% endif %}
+    
+{% endblock %}
