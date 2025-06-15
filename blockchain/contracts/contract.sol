@@ -2,12 +2,8 @@
 pragma solidity 0.8.23;
 pragma abicoder v2;
 
-import "./standart_token/token/ERC1155/ERC1155.sol";
-import "./standart_token/token/ERC20/ERC20.sol";
-
-// для REMIX
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-// import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 
 contract Contract is ERC20, ERC1155 {
@@ -24,7 +20,7 @@ contract Contract is ERC20, ERC1155 {
         uint   Id;
         string Name;
         string Desimals;
-        string ImagePath;     //path to photo
+        string ImagePath;     
         uint   TotalReliased;
         uint   DataSet;
     }
