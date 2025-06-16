@@ -2,6 +2,7 @@ from web3 import Web3
 import json
 from pathlib import Path
 
+BASE_DIR = "../blockchain/artifacts/contracts"
 
 class ContractClient:
     def __init__(self, provider_url: str, contract_json_path: str):
@@ -78,6 +79,6 @@ class ContractClient:
 
 contract_client = ContractClient(
     provider_url="http://127.0.0.1:8545",
-    contract_json_path="contract.sol/Contract.json"
+    contract_json_path=f"{BASE_DIR}/contract.sol/Contract.json"
 )
 
