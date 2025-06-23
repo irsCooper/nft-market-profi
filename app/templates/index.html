@@ -21,7 +21,7 @@
                     <a href="/lk">Мои данные</a>
                     <a href="/logout">Выйти</a>
                 {% else %}
-                    <a href="/auth">Войти</a>
+                    <a href="/login">Войти</a>
                 {% endif %}
             </div>
         </menu>
@@ -51,7 +51,6 @@
         setInterval(function()
         {
             $('#menu').load(document.URL + ' #menu');
-            //$('#auth').load(document.URL + ' #auth');
         }, 5000)
     </script>
     <!--  -->

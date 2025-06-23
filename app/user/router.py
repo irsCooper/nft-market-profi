@@ -1,8 +1,7 @@
-from flask import Blueprint, jsonify, render_template, redirect, request, session, flash
+from flask import Blueprint, jsonify, redirect, request, session
 
 from blockchain.client import contract_client
 from utils.utils import ALL_METHODS, check_result, render_all
-# from main import app
 
 user_app = Blueprint("user", __name__)
 app = user_app

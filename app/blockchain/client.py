@@ -1,6 +1,8 @@
 from web3 import Web3
-import json
+from web3.exceptions import ContractLogicError
 from pathlib import Path
+
+import json
 
 BASE_DIR = "../blockchain/artifacts/contracts"
 
@@ -35,7 +37,7 @@ class ContractClient:
                 return "Not authorized"
             return res
         except Exception as e:
-            return str(e)
+            return e
         
     def call(self, method_name: str, args: list = None):
         try:
@@ -45,8 +47,10 @@ class ContractClient:
                 return method(*args).call({'from': self.public_key})  
             
             return method().call({'from': self.public_key})
+        except ContractLogicError as e:
+            return e
         except Exception as e:
-            return str(e)
+            return e
 
     def transact(self, method_name: str, args: list = None):
         try:
@@ -56,25 +60,29 @@ class ContractClient:
                 return method(*args).transact({'from': self.public_key})  
                 
             return method().transact({'from': self.public_key})
+        except ContractLogicError as e:
+            return e
         except Exception as e:
-            return str(e)
+            return e
         
     def payable_transact(self, method_name: str, args: list = None, value_wei: int = 0):
         try:
             method = getattr(self.contract.functions, method_name)
+            
             if args:
-                txn = method(*args).transact({
+                return method(*args).transact({
                     'from': self.public_key,
                     'value': value_wei
                 }) 
-            else:
-                txn = method().transact({
-                    'from': self.public_key,
-                    'value': value_wei
-                })
-            return txn
+            
+            return method().transact({
+                'from': self.public_key,
+                'value': value_wei
+            })
+        except ContractLogicError as e:
+            return e
         except Exception as e:
-            return str(e)
+            return e
 
 
 contract_client = ContractClient(
