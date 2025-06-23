@@ -19,19 +19,30 @@
               // Передаем выбранный аккаунт на сервер Flask
               const selectedAccount = accounts[0];
       
-              fetch('/auth', {
+              fetch('/login', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ account: selectedAccount })
+                body: JSON.stringify({ public_key: selectedAccount })
               })
+              .then(response => response.json())
+              .then(data => {
+                if (data.redirect) {
+                  window.location.href = data.redirect;
+                } else if (data.error) {
+                  alert(data.error);
+                }
+              })
+              .catch(error => {
+                console.error('Ошибка авторизации:', error);
+              });
             })
         });
       
         document.body.appendChild(loginButton);
       } else {
-        console.error('Расширение Metamask не доступно');
+        console.error('Расширение Metamask недоступно');
       }
     </script>
 
