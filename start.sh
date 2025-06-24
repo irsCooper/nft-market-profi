@@ -8,11 +8,22 @@ echo "[+] Запуск проекта..."
 echo "-------------------"
 echo ""
 
-cd ./backend && bash network.sh
+cd ./blockchain && bash network.sh
 
 echo "-------------------"
-echo "[+] Запуск интерфейса..."
+echo "[+] Установка виртуального окружения python..."
 echo "-------------------"
 echo ""
 
-/bin/python3 ../frontend/main.py
+cd ../app
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+echo "-------------------"
+echo "[+] Запуск веб-приложения..."
+echo "-------------------"
+echo ""
+
+/bin/python3 main.py
