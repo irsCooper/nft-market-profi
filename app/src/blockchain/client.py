@@ -24,7 +24,7 @@ class ContractClient:
         self.public_key = self.w3.to_checksum_address(public_key)
         self.w3.eth.default_account = self.public_key
 
-    def _unset_account(self):
+    def unset_account(self):
         self.public_key = None
         self.w3.eth.default_account = None
 
@@ -33,52 +33,22 @@ class ContractClient:
             self._set_account(public_key)
             res = self.call("Auth")
             if res[0][0] == "":
-                self._unset_account()
+                self.unset_account()
                 return "Not authorized"
             return res
         except Exception as e:
             return e
         
-    def call(self, method_name: str, args: list = None):
+    def to_transact(self, method_name: str, args: list = None, is_transact: bool = False, value_wei: int = 0):
         try:
             method = getattr(self.contract.functions, method_name)
+            fn = method(*args) if args else method() 
+            tx_params = {'from': self.public_key}
             
-            if args:
-                return method(*args).call({'from': self.public_key})  
-            
-            return method().call({'from': self.public_key})
-        except ContractLogicError as e:
-            return e
-        except Exception as e:
-            return e
+            if value_wei:
+                tx_params['value'] = value_wei
 
-    def transact(self, method_name: str, args: list = None):
-        try:
-            method = getattr(self.contract.functions, method_name)
-
-            if args:
-                return method(*args).transact({'from': self.public_key})  
-                
-            return method().transact({'from': self.public_key})
-        except ContractLogicError as e:
-            return e
-        except Exception as e:
-            return e
-        
-    def payable_transact(self, method_name: str, args: list = None, value_wei: int = 0):
-        try:
-            method = getattr(self.contract.functions, method_name)
-            
-            if args:
-                return method(*args).transact({
-                    'from': self.public_key,
-                    'value': value_wei
-                }) 
-            
-            return method().transact({
-                'from': self.public_key,
-                'value': value_wei
-            })
+            return fn.transact(tx_params) if is_transact else fn.call(tx_params)
         except ContractLogicError as e:
             return e
         except Exception as e:

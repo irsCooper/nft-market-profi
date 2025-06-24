@@ -1,7 +1,7 @@
 from flask import flash, render_template
 from web3.exceptions import ContractLogicError
 
-from blockchain.client import contract_client
+from src.blockchain.client import contract_client
 
 GET = ["GET"]
 POST = ["POST"]
@@ -10,11 +10,11 @@ ALL_METHODS = ["GET", "POST"]
 def render_all(name:str):
     return render_template(
         f'{name}.html',
-        nfts=contract_client.call("GetAllSellNft"),
-        user=contract_client.call("Auth"),
-        userNfts=contract_client.call("GetAllUser_Nfts"),
-        collections=contract_client.call("GetAllUser_Collection"),
-        actions=contract_client.call("GetAllAction"),
+        nfts=contract_client.to_transact("GetAllSellNft"),
+        user=contract_client.to_transact("Auth"),
+        userNfts=contract_client.to_transact("GetAllUser_Nfts"),
+        collections=contract_client.to_transact("GetAllUser_Collection"),
+        actions=contract_client.to_transact("GetAllAction"),
     )
 
 def check_result(result):
