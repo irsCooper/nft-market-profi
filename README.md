@@ -17,12 +17,12 @@
 
 
 ## Для запуска решения подадобится следующее ПО:
-- [Python](https://www.python.org/downloads/)
 - [Node.js](https://nodejs.org/en/download)
 
 #### Чтобы установить проект вам нужно скопировать данный репозиторий себе на компьютер следующим образом:
 ```
-git clone https://github.com/irsCooper/profi-ethereum-erc1155.git
+git clone https://github.com/irsCooper/nft-market-profi.git
+git checkout js-version
 ```
 #### Теперь открываем терминал в корневой папке проекта и пишем следующую команду:
 ```
