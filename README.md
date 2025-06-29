@@ -10,7 +10,8 @@
 
 #### Чтобы установить проект вам нужно скопировать данный репозиторий себе на компьютер следующим образом:
 ```
-git clone https://github.com/irsCooper/profi-ethereum-erc1155.git
+git clone https://github.com/irsCooper/nft-market-profi.git
+git checkout chempionat_version
 ```
 ИЛИ можете установить zip версию папки, и разорхивировать её.
 #### Теперь открываем терминал в корневой папке проекта и пишем следующую команду:
@@ -20,4 +21,4 @@ bash start.sh
 
 # при взаимодействии с веб приложением все ошибки отображаются внизу страницы
 
-#### Если вам захочется повторить этот проект вы можете посмотреть подробный туториал [вот тут :)](https://github.com/irsCooper/profi-ethereum-erc1155/blob/chempionat_version/TUTORIAL.md)
+#### Если вам захочется повторить этот проект вы можете посмотреть подробный туториал [вот тут :)](https://github.com/irsCooper/nft-market-profi/blob/chempionat_version/TUTORIAL.md)
