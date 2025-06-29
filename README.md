@@ -22,7 +22,7 @@
 
 #### Чтобы установить проект вам нужно скопировать данный репозиторий себе на компьютер следующим образом:
 ```
-git clone https://github.com/irsCooper/profi-ethereum-erc1155.git
+git clone https://github.com/irsCooper/nft-market-profi.git
 ```
 #### Теперь открываем терминал в корневой папке проекта и пишем следующую команду:
 ```
