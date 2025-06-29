@@ -16,15 +16,14 @@ def set_nft():
             flash("С картинкой что-то не так, повторите попытку")
         else:
             print("photo: " + request.form.get('image'))
-            res = contract_client.to_transact(
+            res = contract_client.transact(
                 method_name="SetNft",
                 args=[
                     request.form.get("name"),
                     request.form.get("description"),
                     request.form.get("image"),
                     request.form.get("amount", type=int)
-                ],
-                is_transact=True
+                ]
             )
             check_result(res)
     return render_all("set_nft")
@@ -39,7 +38,7 @@ def set_nft_in_collection(id):
         if not request.form.get('image'):
             flash("С картинкой что-то не так, повторите попытку")
         else:
-            res = contract_client.to_transact(
+            res = contract_client.transact(
                 method_name="SetNftForCollection",
                 args=[
                     id,
@@ -47,8 +46,7 @@ def set_nft_in_collection(id):
                     request.form.get("description"),
                     request.form.get('image'),
                     request.form.get("amount", type=int)
-                ],
-                is_transact=True
+                ]
             )
             check_result(res)
     return render_all("set_nft_in_collection")

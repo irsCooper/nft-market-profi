@@ -1,10 +1,12 @@
 from web3 import Web3
 from web3.exceptions import ContractLogicError
 from pathlib import Path
-
 import json
 
+
+PROVIDER_URL = "http://127.0.0.1:8545"
 BASE_DIR = "../blockchain/artifacts/contracts"
+
 
 class ContractClient:
     def __init__(self, provider_url: str, contract_json_path: str):
@@ -39,16 +41,45 @@ class ContractClient:
         except Exception as e:
             return e
         
-    def to_transact(self, method_name: str, args: list = None, is_transact: bool = False, value_wei: int = 0):
+    def call(self, method_name: str, args: list = None):
         try:
             method = getattr(self.contract.functions, method_name)
-            fn = method(*args) if args else method() 
             tx_params = {'from': self.public_key}
+            if args:
+                return method(*args).call(tx_params)  
             
-            if value_wei:
-                tx_params['value'] = value_wei
+            return method().call(tx_params)
+        except ContractLogicError as e:
+            return e
+        except Exception as e:
+            return e
 
-            return fn.transact(tx_params) if is_transact else fn.call(tx_params)
+    def transact(self, method_name: str, args: list = None):
+        try:
+            method = getattr(self.contract.functions, method_name)
+            tx_params = {'from': self.public_key}
+
+            if args:
+                return method(*args).transact(tx_params)  
+                
+            return method().transact(tx_params)
+        except ContractLogicError as e:
+            return e
+        except Exception as e:
+            return e
+        
+    def payable_transact(self, method_name: str, args: list = None, value_wei: int = 0):
+        try:
+            method = getattr(self.contract.functions, method_name)
+            tx_params = {
+                'from': self.public_key,
+                'value': value_wei
+            }
+            
+            if args:
+                return method(*args).transact(tx_params) 
+            
+            return method().transact(tx_params)
         except ContractLogicError as e:
             return e
         except Exception as e:
@@ -56,7 +87,7 @@ class ContractClient:
 
 
 contract_client = ContractClient(
-    provider_url="http://127.0.0.1:8545",
+    provider_url=PROVIDER_URL,
     contract_json_path=f"{BASE_DIR}/contract.sol/Contract.json"
 )
 

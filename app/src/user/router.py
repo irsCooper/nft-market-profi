@@ -42,34 +42,31 @@ def lk():
     
     if request.method == 'POST': 
         if request.form.get('id') == "EnterReferralCode":
-            code = contract_client.to_transact(
+            code = contract_client.transact(
                 method_name="EnterReferralCode", 
                 args=[
                     request.form.get('ref')
-                ],
-                is_transact=True
+                ]
             )
             check_result(code)
             
         elif request.form.get('id') == "collection":   
-            set_collection = contract_client.to_transact(
+            set_collection = contract_client.transact(
                 method_name="SetCollection", 
                 args=[
                     request.form.get('name'),
                     request.form.get('description')
-                ],
-                is_transact=True
+                ]
             )
             check_result(set_collection)
 
         else:
-            sell = contract_client.to_transact(
+            sell = contract_client.transact(
                 method_name="SellNft", 
                 args=[
                     request.form.get("id", type=int),
                     request.form.get("price", type=int)
-                ],
-                is_transact=True
+                ]
             )
             check_result(sell)
     return render_all('lk')

@@ -14,7 +14,7 @@ def set_action(id):
         return redirect('/auth')
     
     if request.method == "POST":         
-        res = contract_client.to_transact(
+        res = contract_client.transact(
             method_name="SetAction", 
             args=[
                 int(id),
@@ -22,8 +22,7 @@ def set_action(id):
                 int(datetime.strptime(request.form.get('end'), '%Y-%m-%dT%H:%M').timestamp()),
                 request.form.get("min", type=int),
                 request.form.get("max", type=int)
-            ],
-            is_transact=True
+            ]
         )
         check_result(res)
         return redirect("/actions")
@@ -36,22 +35,20 @@ def action():
     if session.get('address') == None: return redirect('/auth')
     if request.method == "POST": 
         if request.form.get('bet') != None:
-            bet = contract_client.to_transact(
+            bet = contract_client.transact(
                 method_name="SetBet", 
                 args=[
                     request.form.get("id", type=int),
                     request.form.get("bet", type=int)
-                ],
-                is_transact=True
+                ]
             )
             check_result(bet)
         else:
-            end = contract_client.to_transact(
+            end = contract_client.transact(
                 method_name="EndAction", 
                 args=[
                     request.form.get('id', type=int)
-                ],
-                is_transact=True
+                ]
             )
             check_result(end)
     return render_all("action")
@@ -60,4 +57,4 @@ def action():
 
 @app.route("/all_bet_to_action/<int:id>", methods=ALL_METHODS) 
 def all_bet_to_action(id):
-    return render_template("bet_to_action.html", bets=contract_client.to_transact("GetBetToAction", args=[int(id)]))
+    return render_template("bet_to_action.html", bets=contract_client.call("GetBetToAction", args=[int(id)]))
