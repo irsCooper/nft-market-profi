@@ -1,29 +1,26 @@
 
 set -eu
 
-clear;
+cd ./blockchain
 
-echo "-------------------"
-echo "[+] Запуск проекта..."
-echo "-------------------"
-echo ""
+npm install
 
-cd ./blockchain && bash network.sh
+npx hardhat clean
 
-echo "-------------------"
-echo "[+] Установка виртуального окружения python..."
-echo "-------------------"
-echo ""
+gnome-terminal -- npx hardhat node
+
+sleep 5;
+
+npx hardhat compile
+
+sleep 3;
+
+npx hardhat run --network localhost scripts/deploy.js
+
+sleep 3;
 
 cd ../app
 
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+npm install
 
-echo "-------------------"
-echo "[+] Запуск веб-приложения..."
-echo "-------------------"
-echo ""
-
-/bin/python3 main.py
+npm start

@@ -1,25 +1,26 @@
-const { ethers } = require("hardhat");
+const {ethers} = require('hardhat')
 
-async function main() {
-  const Contract = await ethers.getContractFactory("Contract");
-  const contract = await Contract.deploy();
-  
-  // пуш адресса контракта в файл json 
-  const fs = require("fs");
-  const path = require("path");
-  
-  const filePath = path.join(__dirname, "../artifacts/contracts/contract.sol/Contract.json");
-  const filePathUsers = path.join(__dirname, "../artifacts/contracts/user.sol/Users.json");
-  
-  let data = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath)) : {};
-  data.address = contract.target;  
-  // data.address = contract.address; //for home
-  fs.writeFileSync(filePath, JSON.stringify(data));
+async function deploy() {
+    const Con = await ethers.getContractFactory("Contract")
+    const con = await Con.deploy()
+
+    const fs = require('fs')
+    const path = require('path')
+
+    const file = path.join(__dirname, "../../app/src/artifacts/contracts/contract.sol/Contract.json")
+
+    const data = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file)) : {}
+    data.address = con.target
+
+    fs.writeFileSync(file, JSON.stringify(data))
 }
 
-main()
-  .then(() => process.exit(0))
-  .catch(error => {
-    console.error(error);
-    process.exit(1);
-});
+deploy()
+.then(() => {
+    console.log('Success')
+    process.exit(0)
+})
+.catch(err => {
+    console.error(err)
+    process.exit(1)
+})

@@ -1,449 +1,484 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.23;
-pragma abicoder v2;
+pragma solidity 0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
+contract Contract is ERC20("Professional", "PROFI"), ERC1155("./images/") {
 
-contract Contract is ERC20, ERC1155 {
+    //эти параметры нужны для назначения уникального номера нфт и коллекции
+    uint nft_unicue;
+    uint collection_unicue = 1;
 
-    //для remix
+    //для  remix
     // address Owner = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
-
+    
     address Owner = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
 
-    uint public unicue_nft; //сколько видов nftшек создано в системе (то же самое что id)
-    uint public unicue_collection; //сколько создано коллекций в системе (то же самое что id)
 
-    struct NFT {
-        uint   Id;
+    //пользователь
+    struct User {
         string Name;
-        string Desimals;
-        string ImagePath;     
-        uint   TotalReliased;
-        uint   DataSet;
+        string RefCode;
+        string FriendRefCode;
+        uint Discont;
+        bool ActiveRefCode;
     }
 
 
-    //уникальная структура, котору мы можем отображать в лк пользователя и когда nft продаётся
-    //облегчаем контракт, чтобы у нас не было 33 структуры
+    //нфт
+    struct NFT {
+        uint Id;
+        string Name;
+        string Desc;
+        string Image;
+        uint Price;
+        uint Amount;
+        uint TimeSet;
+    }
+
+    //продающиеся нфт
     struct Sell_Nft {
-        uint Id;           //нужно заполнять и учитывать только когда показываем при продаже
+        uint Id;
         NFT NFT;
-        address Owner;     //нужно заполнять и учитывать только когда показываем при продаже
-        uint Price;        //нужно заполнять и учитывать только когда показываем при продаже
-        bool InCollection;
-        string Name_Collection;
-        string Description_Collection;
-        bool SellOrNotSell;
+        address Owner;
+        string Name_Col;
+        string Desc_Col;
+        bool SellOrNot;
     }
 
+    //коллекция
     struct Collection {
         uint Id;
         string Name;
-        string Description;
-        uint[] NftInCollection;
-        uint[] AmountForNft;
+        string Desc;
+        uint[] Nfts;
+        uint[] AmountNfts;
     }
 
-    // ставка к аукциону
+
+    //ставка
     struct Bet {
         address Owner;
         uint Price;
     }
 
+
+    //аукцион
     struct Action {
         uint Id;
         Collection Collection;
-        uint Time_Start;
-        uint Time_End;
-        uint Min_Price;
-        uint Max_Price;
-    }
-
-    struct User {
-        string Login;
-        string Refferal_Code;
-        uint Discont;
+        uint Start;
+        uint End;
+        uint Min;
+        uint Max;
     }
 
 
-    // nft
-    mapping (uint => NFT) public nft; //nft info
-    mapping (uint => bool) nftInCollection;
-    mapping (uint => uint) nft_number_collection; //тут лежить номер коллекции, если nft находится в ней
-    mapping (address => uint) user_amount_unicue_nft; // это нужно для удобства вывода nft пользователя
-    mapping (uint => bool) SellOrNotSell_NFT; //get address user and id -> nft инфу о которой хотим узнать
+    //вот тут хранятся данные
 
-    Sell_Nft[] public Sell_Only_Nft; //это массив для одиноких nftшек
+    //nft
+    mapping (uint => NFT) nft;
+    mapping (uint => uint) nftCollectionId;
+    mapping (uint => bool) nftSellOrNot;
+    mapping (address => uint) userNft;
+    Sell_Nft[] sell;
 
+    //collection
+    mapping (uint => Collection) collection;
+    mapping (uint => bool) collectionSellOrNot;
+    mapping (uint => address) collectionOwner;
+    mapping (address => uint) userCollection;    
 
-    //  collection
-    mapping (uint => Collection) public collection;
-    mapping (uint => address) owner_collection;
-    mapping (uint => bool) SellOrNotSell_Collection;
-    mapping (address => uint) user_amount_unicue_collection; // это нужно для удобства вывода коллекций пользователя
+    //action
+    mapping (uint => Bet[]) bets;
+    Action[] action;
 
-    // action
-    mapping (uint => Bet[]) public bet_to_action;
-    Action[] public action;
-
-
-    // user
+    //user
     mapping (address => User) user;
-    mapping (string => address) MyReferralCodeAddress;
-    mapping (string => bool)    MyReferralCodeBool;     //вводился ли код пользователя кем-то
-   
+    mapping (string => bool) refCodeActive;
 
+
+    //проверка на владельца
     modifier OnlyOwner() {
-        require(msg.sender == Owner, "you are not owner");
+        require(msg.sender == Owner, "you are not Owner!");
         _;
     }
 
-// +
-    function GetAllSellNft() public view returns(Sell_Nft[] memory) {
-        return Sell_Only_Nft;
-    }
 
-// +
-    function GetAllAction() public view returns(Action[] memory) {
+    //показать все аукционы
+    function getAcrion() public view returns (Action[] memory) {
         return action;
     }
 
-    function GetBetToAction(uint id) public view returns(Bet[] memory) {
-        return bet_to_action[id];
+    //показать все продающиеся нфт
+    function getSellNft() public view returns (Sell_Nft[] memory) {
+        return sell;
+    }
+
+    //показать ставки к аукциону
+    function getBetToAcrion(uint id) public view returns (Bet[] memory) {
+        return bets[id];
+    }
+
+    //авторизация
+    function auth() public view returns (User memory u, uint b) {
+        u = user[msg.sender];
+        b = ERC20.balanceOf(msg.sender);
     }
 
 
-// +
-    function Auth() public view returns(User memory _user, uint balance) {
-        _user = user[msg.sender];
-        balance = ERC20.balanceOf(msg.sender);
-    }
-
-    
-    // +
-    function GetAllUser_Nfts() public view returns(Sell_Nft[] memory) {
-        // uint ost = unicue_nft - user_amount_unicue_nft[msg.sender];
-        // Sell_Nft[] memory _nft = new Sell_Nft[](unicue_nft - ost);
-        Sell_Nft[] memory _nft = new Sell_Nft[](user_amount_unicue_nft[msg.sender]);
-
+    //показать нфт пользователя
+    function getUserNft() public view returns (Sell_Nft[] memory) {
+        Sell_Nft[] memory _nft = new Sell_Nft[](userNft[msg.sender]);
         uint push;
 
-        for (uint i = 0; i < unicue_nft; i++) {
-            if (ERC1155.balanceOf(msg.sender, i) > 0) {
+        for(uint i = 0; i < nft_unicue; i ++) {
+            if(ERC1155.balanceOf(msg.sender, i) > 0) {
                 _nft[push] = Sell_Nft(
-                    0,          //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
+                    0,
                     nft[i],
-                    address(0), //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
-                    0,          //не заполняем т.к. это отображается в лк пользователя, и этот параметр нам не нужен
-                    nftInCollection[i],
-                    collection[nft_number_collection[i]].Name,
-                    collection[nft_number_collection[i]].Description,
-                    SellOrNotSell_NFT[i]
+                    address(0),
+                    collection[nftCollectionId[i]].Name,
+                    collection[nftCollectionId[i]].Desc,
+                    nftSellOrNot[i]
                 );
                 push += 1;
-            } 
+            }
         }
 
         return _nft;
     }
 
-// +
-    function GetAllUser_Collection() public view returns(Collection[] memory) {
-        //работает - не трогаем
-        // uint ost = unicue_collection - user_amount_unicue_collection[msg.sender];
-        // Collection[] memory _collection = new Collection[](unicue_collection - ost);
-        Collection[] memory _collection = new Collection[](user_amount_unicue_collection[msg.sender]);
-
+    //показать коллекции пользователя
+    function getUserCollection() public view returns (Collection[] memory) {
+        Collection[] memory _nft = new Collection[](userCollection[msg.sender]);
         uint push;
 
-        for (uint i = 0; i < unicue_collection; i++) {
-            if (owner_collection[i] == msg.sender) {
-                _collection[push] = collection[i];
+        for(uint i = 1; i < collection_unicue; i++) {
+            if(collectionOwner[i] == msg.sender) {
+                _nft[push] = collection[i];
                 push += 1;
             }
         }
 
-        return _collection;
-    } 
+        return _nft;
+    }
 
-    // +
-    function SetNft(
-            string memory name,
-            string memory description,
-            string memory pathToImage,
-            uint amount) public OnlyOwner() {
-        
-        require(amount > 0, "invalid amount token");
+    //создать нфт
+    //может только владелец
+    //функция принимает все необходимые параметры для нфт
+    //и значение - надо её стразу продавать или нет
+    function setNft(
+        string memory name,
+        string memory desc,
+        string memory image,
+        uint price,
+        uint amount,
+        bool _sell
+    ) public OnlyOwner() {
+        require(amount > 0, "invalid amount");
 
-        //создаём нфтишку в системе 
+    //создаём нфт
         ERC1155._mint(
-            msg.sender, 
-            unicue_nft, 
-            amount, 
+            Owner, 
+            nft_unicue,
+            amount,
             ""
         );
 
-        //записываем инфу о ней для себя
-        nft[unicue_nft] = NFT(
-            unicue_nft,
+    //записываем данные о ней
+        nft[nft_unicue] = NFT(
+            nft_unicue,
             name,
-            description,
-            pathToImage,
+            desc,
+            image,
+            price,
             amount,
             block.timestamp
-        );    
+        );
 
-        //обновляем общее кол-во нфтишек в системе, и кол-во у пользователя
-        user_amount_unicue_nft[msg.sender] += 1;
-        unicue_nft += 1;
-    }
+    //добавили владельцу нфт
+        userNft[Owner] += 1;
 
-    // +
-    function SellNft(uint id, uint newPrice) public  {
-        // && SellOrNotSell_NFT[id] == false
-        require(id <= unicue_nft && ERC1155.balanceOf(msg.sender, id) > 0, "invalid input"); 
-        require(SellOrNotSell_NFT[id] == false, "this nft already sell");
-        if(nftInCollection[id] == true) {
-            require(owner_collection[nft_number_collection[id]] != Owner, "you are not sell this nft");
+    //если передали true то продаём нфт
+        if(_sell == true) {
+            sellNft(nft_unicue, price);
         }
 
-        SellOrNotSell_NFT[id] = true;
-        Sell_Only_Nft.push(Sell_Nft(
-            Sell_Only_Nft.length,
+        nft_unicue += 1;
+    }
+
+
+    //продать нфт 
+    //может любой пользователь
+    //принимает номер и стоимость
+    function sellNft(uint id, uint price) public {
+        require(price > 0, "invalid price");
+        require(id <= nft_unicue, "invalid id");
+        require(nftSellOrNot[id] == false && ERC1155.balanceOf(msg.sender, id) > 0, "this nft already sell or you are not owner this nft");
+
+    //если нфт в коллекции и функцию вызвал взаделец
+    //функция не сработает
+        if(nftCollectionId[id] != 0) {
+            require(msg.sender != Owner, "you can not sell this nft");
+        }
+
+    //меняем стоимость
+        nft[id].Price = price;
+
+    //меняем статус нфт
+        nftSellOrNot[id] = true;
+
+    //добавляем в продающиеся
+        sell.push(Sell_Nft(
+            sell.length,
             nft[id],
             msg.sender,
-            newPrice,
-            nftInCollection[id],
-            collection[nft_number_collection[id]].Name,
-            collection[nft_number_collection[id]].Description,
-            SellOrNotSell_NFT[id]
+            collection[nftCollectionId[id]].Name,
+            collection[nftCollectionId[id]].Desc,
+            true
         ));
     }
 
-    // +
-    function BuyNft(uint id) public {
-        //назначаем переменные для нашего удобства и облегчения контракта
-        uint price = Sell_Only_Nft[id].Price;
-        address _owner = Sell_Only_Nft[id].Owner;
-        uint nft_id = Sell_Only_Nft[id].NFT.Id;
+    //купить нфт
+    function buyNft(uint id) public {
+        require(id < sell.length, "invalid id");
 
-        require(SellOrNotSell_NFT[nft_id] == true && id <= Sell_Only_Nft.length && _owner != msg.sender && ERC20.balanceOf(msg.sender) >= price, "nft problem");
+        address _owner = sell[id].Owner;
+        uint price = sell[id].NFT.Price;
 
-        //переводим монетки
+        require(ERC20.balanceOf(msg.sender) >= price && msg.sender != _owner, "not money or you owner this nft");
+
+    //переводим наш PROFI токег
         ERC20._transfer(msg.sender, _owner, price);
 
-        //переводим нфтишку
+    //переводим саму нфт
         ERC1155._safeTransferFrom(
-            _owner, 
-            msg.sender, 
-            nft_id, 
-            ERC1155.balanceOf(_owner, nft_id), 
+            _owner,
+            msg.sender,
+            sell[id].NFT.Id,
+            sell[id].NFT.Amount,
             ""
         );
 
-        //обновляем кол-во нфтишек у пользователей
-        user_amount_unicue_nft[msg.sender] += 1;
-        user_amount_unicue_nft[_owner] -= 1;   
+    //поменяли значения у пользоватлей
+        userNft[msg.sender] += 1;
+        userNft[_owner] -= 1;
 
-        //если не последняя, переписываем на её место последнюю, ибо в солидити можно удалять только последний элемент
-        // if (id < Sell_Only_Nft.length - 1) {
-            Sell_Only_Nft[Sell_Only_Nft.length - 1].Id = id; //это делать обязательно, иначе возникнет путаница и всё сломается
-            Sell_Only_Nft[id] = Sell_Only_Nft[Sell_Only_Nft.length - 1];
-        // }
+    //меняем статус
+        nftSellOrNot[sell[id].NFT.Id] = false;
 
-        Sell_Only_Nft.pop();
-        SellOrNotSell_NFT[nft_id] = false; //была исправлена ошибка
-
+    //чистим масив
+        sell[sell.length - 1].Id = id;
+        sell[id] = sell[sell.length - 1];
+        sell.pop();
     }
 
-
-
-
-
-
-
-
-
-// +
-    function SetCollection(string memory name, string memory description) public OnlyOwner() {
-        collection[unicue_collection] = Collection(
-            unicue_collection,
-            name, 
-            description,
+    //создать коллекцию
+    //доступна только владелеу
+    //принимает все необходимые параменты
+    function setCollection(string memory name, string memory desc) public OnlyOwner() {
+        
+    //создаём коллекцию
+        collection[collection_unicue] = Collection(
+            collection_unicue,
+            name,
+            desc,
             new uint[](0),
             new uint[](0)
         );
 
-        owner_collection[unicue_collection] = msg.sender;
-        user_amount_unicue_collection[msg.sender] += 1;
+    //добавили коллекцию владельцу
+        userCollection[Owner] += 1;
+        collectionOwner[collection_unicue] = Owner;
 
-        unicue_collection += 1;
-    }
-
-// +
-    function SetNftForCollection(
-            uint idCollection,
-            string memory name,
-            string memory description,
-            string memory pathToImage, 
-            uint amount) public OnlyOwner() {
-
-        require(amount > 0 && idCollection <= unicue_collection, "invalid amount or collection does not exist");
-
-        //назначаем параметры того, что нфтишка принадлешить коллекции
-        nft_number_collection[unicue_nft] = idCollection;
-
-        nftInCollection[unicue_nft] = true;
-
-        //добавляем её в коллекцию
-        collection[idCollection].NftInCollection.push(unicue_nft);
-        collection[idCollection].AmountForNft.push(amount);
-
-        //создаём нфтишку
-        SetNft(name, description, pathToImage, amount);
+        collection_unicue += 1;
     }
 
 
-// +
-    function SetAction(
-            uint idCollection,
-            uint start,
-            uint end,
-            uint min,
-            uint max) public OnlyOwner() {
-        require(SellOrNotSell_Collection[idCollection] == false && idCollection <= unicue_collection, "invalid collection");
-        //это обязательная проверка на время
-        require(start >= block.timestamp && end >= block.timestamp, "Invalid time"); //для тестов можно комнтить, но в итоговом решении она должна быть
+    ///добавить в коллекцию нфт 
+    ///доступна только владельцу 
+    ///принимает все нужные параметры 
+    function setNftInCollection(
+        uint id,
+        string memory name,
+        string memory desc,
+        string memory image,
+        uint amount
+    ) public OnlyOwner {
+        require(id < collection_unicue, "invalid id");
+        require(collectionSellOrNot[id] == false, "this collection already sell");
+        require(amount > 0, "invalid amount");
 
-        //обновляем статус коллекции на - продаётся
-        SellOrNotSell_Collection[idCollection] = true;
+    //добавляем в коллекцию
+        collection[id].Nfts.push(nft_unicue);
+        collection[id].AmountNfts.push(amount);
 
-        //инициализируем мапинг (если мы это не сделаем, то мы не сможем с ним работать)
-        //на фронте первую ставку не показываем, она дефолтная, для того, чтобы всё работало
-        //в функции EndAction есть проверка на кол-во ставок, если кроме этой ставок сделано не было, мы не сможем закончить аукцион
-        //можно проверять, можно не проверять, но тогда в случае чего ERC20 будет ругаться, и функция в любом случае вернёт ошибку
-        //так что, лучше проверять
-        bet_to_action[action.length].push(Bet(address(0), 0));
+    //говорим нфт о том, что она в коллекции
+        nftCollectionId[nft_unicue] = id;
+        
+    //создаём нфт
+        setNft(name, desc, image, 0, amount, false);
+    }
 
+    //создать аукцион
+    //доступна только владельцу
+    //принимает все нужные параметры
+    function setAction(
+        uint id,
+        uint start,
+        uint end,
+        uint min,
+        uint max 
+    ) public OnlyOwner {
+        require(id < collection_unicue, "invalid id");
+        require(collectionSellOrNot[id] == false, "this collection already sell");
+
+    //создали дефолтную ставку
+        bets[action.length].push(Bet(address(0), 0));
+
+    //создали аукцион
         action.push(Action(
             action.length,
-            collection[idCollection],
+            collection[id],
             start,
             end,
             min,
             max
         ));
+
+    //сказали коллекции что она продаётся
+        collectionSellOrNot[id] = true;
     }
 
-    // +
-    function SetBet(uint id, uint bet) public {
-        //это обязательная проверка на время
-        require(id <= action.length && action[id].Time_Start <= block.timestamp && action[id].Time_End >= block.timestamp, "invaid time"); //для тестов можно комнтить, но в итоговом решении она должна быть
-        require(ERC20.balanceOf(msg.sender) >= bet && bet > bet_to_action[id][bet_to_action[id].length - 1].Price && bet >= action[id].Min_Price && bet <= action[id].Max_Price, "invalid money of invalid bet");
+    //создать ствку
+    function setBet(uint id, uint price) public {
+        require(id < action.length, "invalid id");
+        require(price >= action[id].Min && price <= action[id].Max && price > bets[id][bets[id].length - 1].Price, "invalid bet");
 
-        bet_to_action[id].push(Bet(
-            msg.sender,
-            bet
-        ));
+    //создали
+        bets[id].push(Bet(msg.sender, price));
 
-        if (bet == action[id].Max_Price) {
-            EndAction(id);
+    //если достигнута максимальная ставка, заканчиваем аукцион
+        if(price == action[id].Max) {
+            endAction(id, Owner);
         }
     }
 
-    // +
-    function EndAction(uint id) public OnlyOwner() {
-        //назначаем переменные, так как мы вызываем эти параметры несколько раз 1 - нам проще, 2 - констракт легче
-        address owner_bet = bet_to_action[id][bet_to_action[id].length - 1].Owner;
-        uint price = bet_to_action[id][bet_to_action[id].length - 1].Price;
+    //закончить аукцион
+    //доступна только владельцу
+    //принимает номер аукциона и адрес того, что вызываеит функцию
+    function endAction(uint id, address sender) public {
+        require(sender == Owner, "you are not Owner");
+        require(id < action.length, "invalid id");
 
-        require(id <= action.length && bet_to_action[id].length > 1, "action does not exist or null bet, you are not end this action");
+        address _owner = bets[id][bets[id].length - 1].Owner;
+        uint price = bets[id][bets[id].length - 1].Price;
+        Collection memory col = action[id].Collection;
 
-        //переводим токены (монетки) от владельца ставки владельцу системы (потому что аукционы может созлдавать только он)
-        ERC20._transfer(owner_bet, Owner, price);
+    //перевели деньги
+        ERC20._transfer(_owner, Owner, price);
 
-        //переводим нфтишки
+    //перевели нфт
         ERC1155._safeBatchTransferFrom(
-            Owner, 
-            owner_bet, 
-            action[id].Collection.NftInCollection, 
-            action[id].Collection.AmountForNft, 
+            Owner,
+            _owner,
+            col.Nfts,
+            col.AmountNfts,
             ""
         );
 
-        //изменяем количество нфтишек у пользователей 
-        user_amount_unicue_nft[owner_bet] += action[id].Collection.NftInCollection.length; 
-        user_amount_unicue_nft[Owner] -= action[id].Collection.NftInCollection.length;
+    //поменяли значение
+        userNft[Owner] -= col.Nfts.length;
+        userNft[_owner] += col.Nfts.length;
 
-        //назначаем коллекции нового владельца и обновляем статус коллекции - не продаётся
-        owner_collection[action[id].Collection.Id] = owner_bet;
-        SellOrNotSell_Collection[action[id].Collection.Id] = false;
+        collectionOwner[col.Id] = _owner;
 
-        //если это не последний аукцион, перепишем на место того, который хотим удалить последний
-        //так делаем потому что .pop() может удалить только последный элемент
-        // if (id < action.length) {
-            //если мы переписываем аукцион, то его айдишник изменится, значит и ставки мы тоже должны переписать
-            bet_to_action[id] = bet_to_action[action.length - 1];
+    //поменяли значение
+        userCollection[Owner] -= 1;
+        userCollection[_owner] += 1;
 
-            action[action.length - 1].Id = id;
-            action[id] = action[action.length - 1];
-        // }
+    //обновляем ставки
+        bets[id] = bets[action.length - 1];
 
-        //обязательно чистим мапинг 
-        delete bet_to_action[action.length - 1];
+    //чистим аукцион
+        action[action.length - 1].Id = id;
+        action[id] = action[action.length - 1];
+
+        delete bets[action.length - 1];
         action.pop();
-
-        //изменяем количество коллекций у пользователей 
-        user_amount_unicue_collection[Owner] -= 1;
-        user_amount_unicue_collection[owner_bet] += 1;
     }
 
-// +
-    // ввести реферальный код
-    function EnterReferralCode(string memory code) public {
-        //ставниваем строчки
-        require(keccak256(abi.encode(user[msg.sender].Refferal_Code)) != keccak256(abi.encode(code)) && user[msg.sender].Discont == 0, "this is you are refferal code! or you actived referral code!");
-        require(MyReferralCodeBool[code] == false, "this code alreadyactived");
 
-        user[MyReferralCodeAddress[code]].Discont += 1;
+    //отправить реферальный код другу
+    function transferRefCode(address friend) public {
+        require(friend != msg.sender && friend != address(0), "invalid address");
+        user[friend].FriendRefCode = user[msg.sender].RefCode;
+    }
+
+    //ввести рефералдьный код
+    function enterRefCode(string memory code) public {
+        require(user[msg.sender].ActiveRefCode == false && refCodeActive[code] == false, "you already active ref code or this code already active");
+        require(keccak256(abi.encode(code)) != keccak256(abi.encode(user[msg.sender].RefCode)), "this you ref code");
+        
+        user[msg.sender].ActiveRefCode = true;
+        refCodeActive[code] = true;
+
         ERC20._mint(msg.sender, 100);
-
-        MyReferralCodeBool[code] = true;
+        
+        if(user[Owner].Discont < 3) {
+            user[Owner].Discont += 1;
+        }
     }
 
+    //перевести нфт пользователю
+    function transferNftForFriend(uint id, address friend) public {
+        require(id < nft_unicue, "invalid id");
+        require(ERC1155.balanceOf(msg.sender, id) > 0 && nftSellOrNot[id] == false, "you are not owner this token or this token already sell");
 
+        ERC1155._safeTransferFrom(
+            msg.sender,
+            friend,
+            id,
+            ERC1155.balanceOf(msg.sender, id),
+            ""
+        );
 
+        userNft[msg.sender] -= 1;
+        userNft[friend] += 1;
+    }
 
-    //ERC20("Professional", "PROFI") - этой строчкой мы задаём name и simbol токена (монетки)
-    //ERC1155("./images/") - тут указывается uri адрес для токена, но мы пишем сюда любую заглушку, ибо оно не используется в нашем коде
-    constructor() ERC20("Professional", "PROFI") ERC1155("./images/") {
-        // в папках проекта изменить параметр в функции decimals контракта ERC20 с 18и на 6 (так указано в тз)
+    constructor() {
         ERC20._mint(Owner, 1000000);
 
-
-        user[Owner] = User("Owner", "PROFI70992024", 0);
-
-        user[0x70997970C51812dc3A010C7d01b50e0d17dc79C8] = User("Tom", "PROFI3C442024", 0);
-        ERC20._transfer(Owner, 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 200000);
-
-        user[0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC] = User("Max", "PROFI90F72024", 0);
-        ERC20._transfer(Owner, 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, 300000);
-
-        user[0x90F79bf6EB2c4f870365E785982E1f101E93b906] = User("Jack", "PROFI15d32024", 0);
-        ERC20._transfer(Owner, 0x90F79bf6EB2c4f870365E785982E1f101E93b906, 400000);
-
-        //remix
-        // user[0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2] = User("Tom", "PROFI4B202024", 0);
+        //для remix
+        // user[Owner] = User("Owner", "PROFI5B382024", "", 0, false);
+        // user[0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2] = User("Tom", "PROFI5B382024", "", 0, false);
         // ERC20._transfer(Owner, 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2, 200000);
 
-        // user[0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db] = User("Max", "PROFI78732024", 0);
+        // user[0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db] = User("Max", "PROFI4B202024", "", 0, false);
         // ERC20._transfer(Owner, 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db, 300000);
 
-        // user[0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB] = User("Jack", "PROFI617F2024", 0);
+        // user[0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB] = User("Jack", "PROFI78732024", "", 0, false);
         // ERC20._transfer(Owner, 0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB, 400000);
-    }
 
+
+        user[Owner] = User("Owner", "PROFIf39F2024", "", 0, false);
+        user[0x70997970C51812dc3A010C7d01b50e0d17dc79C8] = User("Tom", "PROFI70992024", "", 0, false);
+        ERC20._transfer(Owner, 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 200000);
+
+        user[0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC] = User("Max", "PROFI3C442024", "", 0, false);
+        ERC20._transfer(Owner, 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, 300000);
+
+        user[0x90F79bf6EB2c4f870365E785982E1f101E93b906] = User("Jack", "PROFI90F72024", "", 0, false);
+        ERC20._transfer(Owner, 0x90F79bf6EB2c4f870365E785982E1f101E93b906, 400000);
+
+
+
+
+        setNft("Funny Cat", "This Cat is fun", "cat_nft1.png", 0, 10, false);
+        setNft("Husky", "This is husky", "husky_nft1.png", 0, 50, false);
+        setNft("Walker", "This is walker", "walker_nft1.png", 0, 100, false);
+    }
 }
